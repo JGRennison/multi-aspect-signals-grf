@@ -1,0 +1,127 @@
+/* multi-aspect-signals.nml */
+
+/*
+    License: GPL v2
+*/
+
+grf {
+    grfid: "JGR\81";
+    name: string(STR_GRF_NAME);
+    desc: string(STR_GRF_DESCRIPTION);
+    version: 0;
+    min_compatible_version: 0;
+    url: string(STR_GRF_URL);
+}
+
+if (!extended_feature_test("action3_signals_custom_signal_sprites")) {
+    error(FATAL, string(STR_UNSUPPORTED_VERSION));
+}
+
+param[10] = reserve_sprites(3);
+replace(param[10]) {
+    recolour_sprite {
+        0x03..0x09: 0xC6..0xCC;
+        0x20..0x21: 0xC9..0xCA;
+        0x28: 0xCB;
+        0x6A: 0xC8;
+        0x88: 0xC6;
+        0xF5: 0xCC;
+    }
+    recolour_sprite {
+        0xAB..0xAE: 0x83..0x86;
+    }
+    recolour_sprite {
+        0xAB..0xAE: 0x94..0x97;
+        //0x81..0x86: 0x92..0x97;
+    }
+}
+
+template tmpl_signals(x,y) {
+    [x +   0, y, 20, 30, -9, -28] // ne-sw
+    [x +  60, y, 20, 30, -9, -28] // sw-ne
+    [x + 120, y, 20, 30, -9, -28] // se-nw
+    [x + 180, y, 20, 30, -9, -28] // nw-se
+    [x + 300, y, 20, 30, -9, -28] // e-w
+    [x + 240, y, 20, 30, -9, -28] // w-e
+    [x + 360, y, 20, 30, -9, -28] // s-n
+    [x + 420, y, 20, 30, -9, -28] // n-s
+}
+
+template tmpl_pbs_signals(x,y) {
+    [x +   0, y, 5, 25, -2, -23] // ne-sw
+    [x +  32, y, 4, 25, -1, -23] // sw-ne
+    [x +  64, y, 4, 25, -1, -23] // se-nw
+    [x +  96, y, 5, 25, -1, -23] // nw-se
+    [x + 128, y, 5, 25, -1, -23] // e-w
+    [x + 160, y, 5, 25, -2, -23] // w-e
+    [x + 191, y, 6, 25, -3, -23] // s-n
+    [x + 223, y, 6, 25, -3, -23] // n-s
+}
+
+spriteset (signals_block_red,   "gfx/light-generic.png") { tmpl_signals(10, 50) }
+spriteset (signals_block_green, "gfx/light-generic.png") { tmpl_signals(40, 50) }
+
+spriteset (signals_block_y,     "gfx/light-generic.png") { tmpl_signals(10, 100) }
+spriteset (signals_block_yy,    "gfx/light-generic.png") { tmpl_signals(40, 100) }
+
+spriteset (signals_pbs_red,     "gfx/light-generic.png") { tmpl_pbs_signals(10, 147) }
+spriteset (signals_pbs_green,   "gfx/light-generic.png") { tmpl_pbs_signals(26, 147) }
+
+spriteset (signals_pbs_oneway_red,   "gfx/light-generic.png") { tmpl_pbs_signals(10, 178) }
+spriteset (signals_pbs_oneway_green, "gfx/light-generic.png") { tmpl_pbs_signals(26, 178) }
+
+spriteset (signals_pbs_y,            "gfx/light-generic.png") { tmpl_pbs_signals(10, 209) }
+spriteset (signals_pbs_yy,           "gfx/light-generic.png") { tmpl_pbs_signals(26, 209) }
+
+spriteset (signals_pbs_oneway_y,     "gfx/light-generic.png") { tmpl_pbs_signals(10, 240) }
+spriteset (signals_pbs_oneway_yy,    "gfx/light-generic.png") { tmpl_pbs_signals(26, 240) }
+
+switch(FEAT_SIGNALS, SELF, signal_switch_block, [
+        STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_block_red;
+    1: signals_block_green;
+    2: signals_block_y;
+    3: signals_block_yy;
+}
+
+switch(FEAT_SIGNALS, SELF, signal_switch_pbs, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_pbs_red;
+    1: signals_pbs_green;
+    2: signals_pbs_y;
+    3: signals_pbs_yy;
+}
+
+switch(FEAT_SIGNALS, SELF, signal_switch_pbs_oneway, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_pbs_oneway_red;
+    1: signals_pbs_oneway_green;
+    2: signals_pbs_oneway_y;
+    3: signals_pbs_oneway_yy;
+}
+
+switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) >> 8) {
+      0x0: signal_switch_block;        //light, block
+    0x400: signal_switch_pbs;          //light, PBS
+    0x500: signal_switch_pbs_oneway;   //light, PBS oneway
+    CB_FAILED;
+}
+
+item (FEAT_SIGNALS, custom_signals, 0) {
+    property {
+        enable_restricted_signals: 1;
+        enable_signal_recolour: 1;
+        extra_aspects: 2;
+    }
+
+    graphics {
+        switch_signals;
+    }
+}
+
