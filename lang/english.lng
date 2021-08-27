@@ -3,4 +3,9 @@ STR_GRF_NAME                                :Multi Aspect Signals
 STR_GRF_DESCRIPTION                         :{}Multi Aspect Signals...{}{}License: GPL v2
 STR_GRF_URL                                 :
 
+STR_PARAM_BLOCK_STYLE_NAME                  :Block signal style
+STR_PARAM_BLOCK_STYLE_DESC                  :This sets the visual style for normal block signals
+STR_BLOCK_STYLE_NEW                         :New
+STR_BLOCK_STYLE_TRADITIONAL                 :Traditional
+
 STR_UNSUPPORTED_VERSION                     :Requires an OpenTTD version which supports this feature such as JGR's patchpack v0.42.4 or later.

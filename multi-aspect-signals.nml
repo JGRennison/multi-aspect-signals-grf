@@ -11,6 +11,21 @@ grf {
     version: 0;
     min_compatible_version: 0;
     url: string(STR_GRF_URL);
+
+    param {
+        param_block_style {
+            type: int;
+            name: string(STR_PARAM_BLOCK_STYLE_NAME);
+            desc: string(STR_PARAM_BLOCK_STYLE_DESC);
+            min_value: 0;
+            max_value: 1;
+            def_value: 0;
+            names: {
+                0: string(STR_BLOCK_STYLE_NEW);
+                1: string(STR_BLOCK_STYLE_TRADITIONAL);
+            };
+        }
+    }
 }
 
 if (!extended_feature_test("action3_signals_custom_signal_sprites")) {
@@ -76,7 +91,13 @@ spriteset (signals_pbs_yy,           "gfx/light-generic.png") { tmpl_pbs_signals
 spriteset (signals_pbs_oneway_y,     "gfx/light-generic.png") { tmpl_pbs_signals(10, 240) }
 spriteset (signals_pbs_oneway_yy,    "gfx/light-generic.png") { tmpl_pbs_signals(26, 240) }
 
-switch(FEAT_SIGNALS, SELF, signal_switch_block, [
+spriteset (signals_new_block_red,    "gfx/light-generic.png") { tmpl_pbs_signals(10, 271) }
+spriteset (signals_new_block_green,  "gfx/light-generic.png") { tmpl_pbs_signals(26, 271) }
+
+spriteset (signals_new_block_y,      "gfx/light-generic.png") { tmpl_pbs_signals(10, 302) }
+spriteset (signals_new_block_yy,     "gfx/light-generic.png") { tmpl_pbs_signals(26, 302) }
+
+switch(FEAT_SIGNALS, SELF, signal_switch_block_traditional, [
         STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
         (extra_callback_info2 & 0x000000FF)
     ]) {
@@ -84,6 +105,21 @@ switch(FEAT_SIGNALS, SELF, signal_switch_block, [
     1: signals_block_green;
     2: signals_block_y;
     3: signals_block_yy;
+}
+
+switch(FEAT_SIGNALS, SELF, signal_switch_block_new, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_new_block_red;
+    1: signals_new_block_green;
+    2: signals_new_block_y;
+    3: signals_new_block_yy;
+}
+
+switch (FEAT_SIGNALS, SELF, signal_switch_block, param_block_style) {
+    0: signal_switch_block_new;
+    1: signal_switch_block_traditional;
 }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_pbs, [
