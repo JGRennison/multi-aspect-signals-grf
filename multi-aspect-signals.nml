@@ -21,8 +21,8 @@ grf {
             max_value: 1;
             def_value: 0;
             names: {
-                0: string(STR_BLOCK_STYLE_NEW);
-                1: string(STR_BLOCK_STYLE_TRADITIONAL);
+                0: string(STR_BLOCK_STYLE_TRADITIONAL);
+                1: string(STR_BLOCK_STYLE_NEW);
             };
         }
     }
@@ -118,8 +118,8 @@ switch(FEAT_SIGNALS, SELF, signal_switch_block_new, [
 }
 
 switch (FEAT_SIGNALS, SELF, signal_switch_block, param_block_style) {
-    0: signal_switch_block_new;
-    1: signal_switch_block_traditional;
+    0: signal_switch_block_traditional;
+    1: signal_switch_block_new;
 }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_pbs, [
