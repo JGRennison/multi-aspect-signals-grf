@@ -27,4 +27,5 @@
 
 ### Credits
 
+* Yellow block signals (traditional style) by [kiwitreekor](https://github.com/kiwitreekor).
 * Signal sprites are adapted from [OpenGFX](https://github.com/OpenTTD/OpenGFX).
