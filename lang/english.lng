@@ -1,7 +1,7 @@
 ﻿##grflangid 0x01
 STR_GRF_NAME                                :Multi Aspect Signals
-STR_GRF_DESCRIPTION                         :{}Multi Aspect Signals...{}{}License: GPL v2
-STR_GRF_URL                                 :
+STR_GRF_DESCRIPTION                         :{}Multi Aspect Signals{}{}This GRF includes 4-aspect signal graphics (red, yellow, double-yellow, green) for the block signal, PBS and one-way PBS signal types (light signals not semaphores).{}This GRF requires an OpenTTD version which supports this feature such as JGR's patchpack v0.42.4 or later.{}Realistic braking must be enabled for extra signal aspects to be used.{}{}License: GPL v2
+STR_GRF_URL                                 :https://github.com/JGRennison/multi-aspect-signals-grf
 
 STR_PARAM_BLOCK_STYLE_NAME                  :Block signal style
 STR_PARAM_BLOCK_STYLE_DESC                  :This sets the visual style for normal block signals
