@@ -7,7 +7,7 @@
 
 ### Requirements
 
-* This GRF requires a non-standard version of OpenTTD which supports the signal graphics and multi-aspect features such as [JGR's patchpack](https://github.com/JGRennison/OpenTTD-patches) v0.42.4 or later.
+* This GRF requires a non-standard version of OpenTTD which supports the signal graphics and multi-aspect features such as [JGR's patchpack](https://github.com/JGRennison/OpenTTD-patches) v0.43.0 or later.
 * Realistic braking must be enabled for multi-aspect signalling to be enabled.
 
 ### Things not included
