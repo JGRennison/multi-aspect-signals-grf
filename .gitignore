@@ -1,4 +1,6 @@
 *.nfo
 *.grf
+*.tar
 .nmlcache/
+multi-aspect-signals/
 
