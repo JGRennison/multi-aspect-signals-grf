@@ -137,7 +137,7 @@ switch(FEAT_SIGNALS, SELF, signal_switch_block_new, [
     0: signals_new_block_red;
     1: signals_new_block_green;
     param_aspect_style == 2 ? 3 : 2: signals_new_block_y;
-    param_aspect_style == 2 ? 2 : 3: signals_new_block_y;
+    param_aspect_style == 2 ? 2 : 3: signals_new_block_yy;
 }
 
 switch (FEAT_SIGNALS, SELF, signal_switch_block, param_block_style) {
