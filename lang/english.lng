@@ -8,4 +8,7 @@ STR_PARAM_BLOCK_STYLE_DESC                  :This sets the visual style for norm
 STR_BLOCK_STYLE_NEW                         :New
 STR_BLOCK_STYLE_TRADITIONAL                 :Traditional
 
+STR_PARAM_ROUTING_RESTRICTIONS_NAME         :Show routing restrictions
+STR_PARAM_ROUTING_RESTRICTIONS_DESC         :When enabled, signals with routing restriction programs atttached are shown with a blue signal post
+
 STR_UNSUPPORTED_VERSION                     :Requires an OpenTTD version which supports this feature such as JGR's patchpack v0.43.0 or later.

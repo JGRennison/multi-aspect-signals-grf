@@ -26,6 +26,14 @@ grf {
             };
         }
     }
+    param {
+        param_routing_restriction {
+            type: bool;
+            name: string(STR_PARAM_ROUTING_RESTRICTIONS_NAME);
+            desc: string(STR_PARAM_ROUTING_RESTRICTIONS_DESC);
+            def_value: 1;
+        }
+    }
 }
 
 if (!extended_feature_test("action3_signals_custom_signal_sprites")) {
@@ -151,7 +159,7 @@ switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) >
 
 item (FEAT_SIGNALS, custom_signals, 0) {
     property {
-        enable_restricted_signals: 1;
+        enable_restricted_signals: param_routing_restriction;
         enable_signal_recolour: 1;
         extra_aspects: 2;
     }
