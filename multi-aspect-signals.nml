@@ -34,6 +34,21 @@ grf {
             def_value: 1;
         }
     }
+    param {
+        param_aspect_style {
+            type: int;
+            name: string(STR_PARAM_ASPECT_STYLE_NAME);
+            desc: string(STR_PARAM_ASPECT_STYLE_DESC);
+            min_value: 0;
+            max_value: 2;
+            def_value: 1;
+            names: {
+                0: string(STR_ASPECT_STYLE_3);
+                1: string(STR_ASPECT_STYLE_4);
+                2: string(STR_ASPECT_STYLE_4_JAPANESE);
+            };
+        }
+    }
 }
 
 if (!extended_feature_test("action3_signals_custom_signal_sprites")) {
@@ -111,8 +126,8 @@ switch(FEAT_SIGNALS, SELF, signal_switch_block_traditional, [
     ]) {
     0: signals_block_red;
     1: signals_block_green;
-    2: signals_block_y;
-    3: signals_block_yy;
+    param_aspect_style == 2 ? 3 : 2: signals_block_y;
+    param_aspect_style == 2 ? 2 : 3: signals_block_yy;
 }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_block_new, [
@@ -121,8 +136,8 @@ switch(FEAT_SIGNALS, SELF, signal_switch_block_new, [
     ]) {
     0: signals_new_block_red;
     1: signals_new_block_green;
-    2: signals_new_block_y;
-    3: signals_new_block_yy;
+    param_aspect_style == 2 ? 3 : 2: signals_new_block_y;
+    param_aspect_style == 2 ? 2 : 3: signals_new_block_y;
 }
 
 switch (FEAT_SIGNALS, SELF, signal_switch_block, param_block_style) {
@@ -136,8 +151,8 @@ switch(FEAT_SIGNALS, SELF, signal_switch_pbs, [
     ]) {
     0: signals_pbs_red;
     1: signals_pbs_green;
-    2: signals_pbs_y;
-    3: signals_pbs_yy;
+    param_aspect_style == 2 ? 3 : 2: signals_pbs_y;
+    param_aspect_style == 2 ? 2 : 3: signals_pbs_yy;
 }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_pbs_oneway, [
@@ -146,8 +161,8 @@ switch(FEAT_SIGNALS, SELF, signal_switch_pbs_oneway, [
     ]) {
     0: signals_pbs_oneway_red;
     1: signals_pbs_oneway_green;
-    2: signals_pbs_oneway_y;
-    3: signals_pbs_oneway_yy;
+    param_aspect_style == 2 ? 3 : 2: signals_pbs_oneway_y;
+    param_aspect_style == 2 ? 2 : 3: signals_pbs_oneway_yy;
 }
 
 switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) >> 8) {
@@ -161,7 +176,7 @@ item (FEAT_SIGNALS, custom_signals, 0) {
     property {
         enable_restricted_signals: param_routing_restriction;
         enable_signal_recolour: 1;
-        extra_aspects: 2;
+        extra_aspects: param_aspect_style > 0 ? 2 : 1;
     }
 
     graphics {
