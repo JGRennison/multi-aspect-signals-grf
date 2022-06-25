@@ -49,6 +49,14 @@ grf {
             };
         }
     }
+    param {
+        param_custom_styles {
+            type: bool;
+            name: string(STR_PARAM_CUSTOM_STYLES_NAME);
+            desc: string(STR_PARAM_CUSTOM_STYLES_DESC);
+            def_value: 0;
+        }
+    }
 }
 
 if (!extended_feature_test("action3_signals_custom_signal_sprites")) {
@@ -120,6 +128,10 @@ spriteset (signals_new_block_green,  "gfx/light-generic.png") { tmpl_pbs_signals
 spriteset (signals_new_block_y,      "gfx/light-generic.png") { tmpl_pbs_signals(10, 302) }
 spriteset (signals_new_block_yy,     "gfx/light-generic.png") { tmpl_pbs_signals(26, 302) }
 
+spriteset (signals_shunt_red,   "gfx/shunt.png") { tmpl_signals(10, 50) }
+spriteset (signals_shunt_white, "gfx/shunt.png") { tmpl_signals(40, 50) }
+spriteset (signals_shunt_no_entry, "gfx/shunt.png") { tmpl_signals(10, 100) }
+
 switch(FEAT_SIGNALS, SELF, signal_switch_block_traditional, [
         STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
         (extra_callback_info2 & 0x000000FF)
@@ -165,10 +177,29 @@ switch(FEAT_SIGNALS, SELF, signal_switch_pbs_oneway, [
     param_aspect_style == 2 ? 2 : 3: signals_pbs_oneway_yy;
 }
 
-switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) >> 8) {
-      0x0: signal_switch_block;        //light, block
-    0x400: signal_switch_pbs;          //light, PBS
-    0x500: signal_switch_pbs_oneway;   //light, PBS oneway
+switch(FEAT_SIGNALS, SELF, signal_switch_shunt, [
+        STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_shunt_red;
+    signals_shunt_white;
+}
+
+switch(FEAT_SIGNALS, SELF, signal_switch_shunt_no_entry, [
+        STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    signals_shunt_no_entry;
+}
+
+switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) | signal_style) {
+        0x0: signal_switch_block;        //light, block
+    0x40000: signal_switch_pbs;          //light, PBS
+    0x50000: signal_switch_pbs_oneway;   //light, PBS oneway
+    0x40001: signal_switch_shunt;        //shunt
+    0x40002: signal_switch_shunt;        //shunt (opposite)
+    0x70001: signal_switch_shunt_no_entry; //shunt no entry
+    0x70002: signal_switch_shunt_no_entry; //shunt no entry (opposite)
     CB_FAILED;
 }
 
@@ -184,3 +215,21 @@ item (FEAT_SIGNALS, custom_signals, 0) {
     }
 }
 
+if (param_custom_styles) {
+    item (FEAT_SIGNALS, custom_signals, 0) {
+        property {
+            define_style: 1;
+            style_name: string(STR_STYLE_SHUNT);
+            style_electric_enabled: 0x90;
+            style_no_aspect_increase: 1;
+            style_lookahead_single_signal_only: 1;
+
+            define_style: 2;
+            style_name: string(STR_STYLE_SHUNT_OPPOSITE);
+            style_electric_enabled: 0x90;
+            style_no_aspect_increase: 1;
+            style_lookahead_single_signal_only: 1;
+            style_opposite_side: 0x1;
+        }
+    }
+}
