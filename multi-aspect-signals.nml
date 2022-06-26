@@ -132,6 +132,13 @@ spriteset (signals_shunt_red,   "gfx/shunt.png") { tmpl_signals(10, 50) }
 spriteset (signals_shunt_white, "gfx/shunt.png") { tmpl_signals(40, 50) }
 spriteset (signals_shunt_no_entry, "gfx/shunt.png") { tmpl_signals(10, 100) }
 
+spriteset (signals_block_banner_on,       "gfx/banner.png") { tmpl_signals(10,  50) }
+spriteset (signals_block_banner_off,      "gfx/banner.png") { tmpl_signals(40,  50) }
+spriteset (signals_pbs_banner_on,         "gfx/banner.png") { tmpl_signals(10, 100) }
+spriteset (signals_pbs_banner_off,        "gfx/banner.png") { tmpl_signals(40, 100) }
+spriteset (signals_pbs_oneway_banner_on,  "gfx/banner.png") { tmpl_signals(10, 150) }
+spriteset (signals_pbs_oneway_banner_off, "gfx/banner.png") { tmpl_signals(40, 150) }
+
 switch(FEAT_SIGNALS, SELF, signal_switch_block_traditional, [
         STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
         (extra_callback_info2 & 0x000000FF)
@@ -192,6 +199,33 @@ switch(FEAT_SIGNALS, SELF, signal_switch_shunt_no_entry, [
     signals_shunt_no_entry;
 }
 
+switch(FEAT_SIGNALS, SELF, signal_switch_banner_block, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_block_banner_on;
+    2: signals_block_banner_on;
+    signals_block_banner_off;
+}
+
+switch(FEAT_SIGNALS, SELF, signal_switch_banner_pbs, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_pbs_banner_on;
+    2: signals_pbs_banner_on;
+    signals_pbs_banner_off;
+}
+
+switch(FEAT_SIGNALS, SELF, signal_switch_banner_pbs_oneway, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_pbs_oneway_banner_on;
+    2: signals_pbs_oneway_banner_on;
+    signals_pbs_oneway_banner_off;
+}
+
 switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) | signal_style) {
         0x0: signal_switch_block;        //light, block
     0x40000: signal_switch_pbs;          //light, PBS
@@ -200,6 +234,9 @@ switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) |
     0x40002: signal_switch_shunt;        //shunt (opposite)
     0x70001: signal_switch_shunt_no_entry; //shunt no entry
     0x70002: signal_switch_shunt_no_entry; //shunt no entry (opposite)
+        0x3: signal_switch_banner_block; //banner, block
+    0x40003: signal_switch_banner_pbs;   //banner, PBS
+    0x50003: signal_switch_banner_pbs_oneway; //banner, PBS oneway
     CB_FAILED;
 }
 
@@ -230,6 +267,13 @@ if (param_custom_styles) {
             style_no_aspect_increase: 1;
             style_lookahead_single_signal_only: 1;
             style_opposite_side: 0x1;
+
+            define_style: 3;
+            style_name: string(STR_STYLE_BANNER);
+            style_no_aspect_increase: 1;
+            style_always_reserve_through: 1;
+            style_lookahead_extra_aspects: 1;
+            style_electric_enabled: 0x31;
         }
     }
 }
