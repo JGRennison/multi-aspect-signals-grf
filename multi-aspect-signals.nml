@@ -139,6 +139,18 @@ spriteset (signals_pbs_banner_off,        "gfx/banner.png") { tmpl_signals(40, 1
 spriteset (signals_pbs_oneway_banner_on,  "gfx/banner.png") { tmpl_signals(10, 150) }
 spriteset (signals_pbs_oneway_banner_off, "gfx/banner.png") { tmpl_signals(40, 150) }
 
+spriteset (signals_combined_red,   "gfx/light-combined.png") { tmpl_signals(10, 50) }
+spriteset (signals_combined_green, "gfx/light-combined.png") { tmpl_signals(40, 50) }
+spriteset (signals_combined_y,     "gfx/light-combined.png") { tmpl_signals(10, 100) }
+spriteset (signals_combined_yy,    "gfx/light-combined.png") { tmpl_signals(40, 100) }
+spriteset (signals_combined_shunt, "gfx/light-combined.png") { tmpl_signals(10, 150) }
+
+spriteset (signals_combined_oneway_red,   "gfx/light-combined.png") { tmpl_signals(10, 200) }
+spriteset (signals_combined_oneway_green, "gfx/light-combined.png") { tmpl_signals(40, 200) }
+spriteset (signals_combined_oneway_y,     "gfx/light-combined.png") { tmpl_signals(10, 250) }
+spriteset (signals_combined_oneway_yy,    "gfx/light-combined.png") { tmpl_signals(40, 250) }
+spriteset (signals_combined_oneway_shunt, "gfx/light-combined.png") { tmpl_signals(10, 300) }
+
 switch(FEAT_SIGNALS, SELF, signal_switch_block_traditional, [
         STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
         (extra_callback_info2 & 0x000000FF)
@@ -226,6 +238,28 @@ switch(FEAT_SIGNALS, SELF, signal_switch_banner_pbs_oneway, [
     signals_pbs_oneway_banner_off;
 }
 
+switch(FEAT_SIGNALS, SELF, signal_switch_combined_pbs, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_combined_red;
+    1: signals_combined_green;
+    param_aspect_style == 2 ? 3 : 2: signals_combined_y;
+    param_aspect_style == 2 ? 2 : 3: signals_combined_yy;
+    0xFF: signals_combined_shunt;
+}
+
+switch(FEAT_SIGNALS, SELF, signal_switch_combined_pbs_oneway, [
+        STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
+        (extra_callback_info2 & 0x000000FF)
+    ]) {
+    0: signals_combined_oneway_red;
+    1: signals_combined_oneway_green;
+    param_aspect_style == 2 ? 3 : 2: signals_combined_oneway_y;
+    param_aspect_style == 2 ? 2 : 3: signals_combined_oneway_yy;
+    0xFF: signals_combined_oneway_shunt;
+}
+
 switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) | signal_style) {
         0x0: signal_switch_block;        //light, block
     0x40000: signal_switch_pbs;          //light, PBS
@@ -237,6 +271,8 @@ switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) |
         0x3: signal_switch_banner_block; //banner, block
     0x40003: signal_switch_banner_pbs;   //banner, PBS
     0x50003: signal_switch_banner_pbs_oneway; //banner, PBS oneway
+    0x40004: signal_switch_combined_pbs;        //combined, PBS
+    0x50004: signal_switch_combined_pbs_oneway; //combined, PBS oneway
     CB_FAILED;
 }
 
@@ -274,6 +310,11 @@ if (param_custom_styles) {
             style_always_reserve_through: 1;
             style_lookahead_extra_aspects: 1;
             style_electric_enabled: 0x31;
+
+            define_style: 4;
+            style_name: string(STR_STYLE_COMBINED);
+            style_combined_normal_shunt: 1;
+            style_electric_enabled: 0x30;
         }
     }
 }

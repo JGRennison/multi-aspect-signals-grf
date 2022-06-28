@@ -25,3 +25,4 @@ STR_UNSUPPORTED_VERSION                     :Requires an OpenTTD version which s
 STR_STYLE_SHUNT                             :Shunt
 STR_STYLE_SHUNT_OPPOSITE                    :Shunt (opposite side)
 STR_STYLE_BANNER                            :Banner repeater
+STR_STYLE_COMBINED                          :Combined normal/shunt
