@@ -310,11 +310,13 @@ if (param_custom_styles) {
             style_always_reserve_through: 1;
             style_lookahead_extra_aspects: 1;
             style_electric_enabled: 0x31;
+            style_realistic_braking_only: 1;
 
             define_style: 4;
             style_name: string(STR_STYLE_COMBINED);
             style_combined_normal_shunt: 1;
             style_electric_enabled: 0x30;
+            style_realistic_braking_only: 1;
         }
     }
 }
