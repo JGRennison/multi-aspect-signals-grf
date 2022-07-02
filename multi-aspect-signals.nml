@@ -93,6 +93,17 @@ template tmpl_signals(x,y) {
     [x + 420, y, 20, 30, -9, -28] // n-s
 }
 
+template tmpl_signals_combined(x, y) {
+    [x +   0, y, 20, 30,  -9, -29] // ne-sw
+    [x +  60, y, 20, 30,  -9, -29] // sw-ne
+    [x + 120, y, 20, 30,  -9, -29] // se-nw
+    [x + 180, y, 20, 30,  -9, -29] // nw-se
+    [x + 300, y, 20, 30,  -9, -29] // e-w
+    [x + 240, y, 20, 30,  -9, -29] // w-e
+    [x + 360, y, 20, 30, -10, -29] // s-n
+    [x + 420, y, 20, 30, -10, -29] // n-s
+}
+
 template tmpl_pbs_signals(x,y) {
     [x +   0, y, 5, 25, -2, -23] // ne-sw
     [x +  32, y, 4, 25, -1, -23] // sw-ne
@@ -139,17 +150,17 @@ spriteset (signals_pbs_banner_off,        "gfx/banner.png") { tmpl_signals(40, 1
 spriteset (signals_pbs_oneway_banner_on,  "gfx/banner.png") { tmpl_signals(10, 150) }
 spriteset (signals_pbs_oneway_banner_off, "gfx/banner.png") { tmpl_signals(40, 150) }
 
-spriteset (signals_combined_red,   "gfx/light-combined.png") { tmpl_signals(10, 50) }
-spriteset (signals_combined_green, "gfx/light-combined.png") { tmpl_signals(40, 50) }
-spriteset (signals_combined_y,     "gfx/light-combined.png") { tmpl_signals(10, 100) }
-spriteset (signals_combined_yy,    "gfx/light-combined.png") { tmpl_signals(40, 100) }
-spriteset (signals_combined_shunt, "gfx/light-combined.png") { tmpl_signals(10, 150) }
+spriteset (signals_combined_red,   "gfx/light-combined.png") { tmpl_signals_combined(10, 50) }
+spriteset (signals_combined_green, "gfx/light-combined.png") { tmpl_signals_combined(40, 50) }
+spriteset (signals_combined_y,     "gfx/light-combined.png") { tmpl_signals_combined(10, 100) }
+spriteset (signals_combined_yy,    "gfx/light-combined.png") { tmpl_signals_combined(40, 100) }
+spriteset (signals_combined_shunt, "gfx/light-combined.png") { tmpl_signals_combined(10, 150) }
 
-spriteset (signals_combined_oneway_red,   "gfx/light-combined.png") { tmpl_signals(10, 200) }
-spriteset (signals_combined_oneway_green, "gfx/light-combined.png") { tmpl_signals(40, 200) }
-spriteset (signals_combined_oneway_y,     "gfx/light-combined.png") { tmpl_signals(10, 250) }
-spriteset (signals_combined_oneway_yy,    "gfx/light-combined.png") { tmpl_signals(40, 250) }
-spriteset (signals_combined_oneway_shunt, "gfx/light-combined.png") { tmpl_signals(10, 300) }
+spriteset (signals_combined_oneway_red,   "gfx/light-combined.png") { tmpl_signals_combined(10, 200) }
+spriteset (signals_combined_oneway_green, "gfx/light-combined.png") { tmpl_signals_combined(40, 200) }
+spriteset (signals_combined_oneway_y,     "gfx/light-combined.png") { tmpl_signals_combined(10, 250) }
+spriteset (signals_combined_oneway_yy,    "gfx/light-combined.png") { tmpl_signals_combined(40, 250) }
+spriteset (signals_combined_oneway_shunt, "gfx/light-combined.png") { tmpl_signals_combined(10, 300) }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_block_traditional, [
         STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
