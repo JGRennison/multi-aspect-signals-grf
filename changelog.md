@@ -1,3 +1,7 @@
+### v4  (2022-07-03)
+
+* Add parameter to enable custom signal styles: shunt, banner repeater and combined normal/shunt.
+
 ### v3  (2021-10-24)
 
 * Wrong sprites for new style block signals YY aspect.
