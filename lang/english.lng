@@ -18,7 +18,7 @@ STR_ASPECT_STYLE_4                          :4 Aspect British (R -> Y -> YY -> G
 STR_ASPECT_STYLE_4_JAPANESE                 :4 Aspect Japanese (R -> YY -> Y -> G)
 
 STR_PARAM_CUSTOM_STYLES_NAME                :Extra signal styles
-STR_PARAM_CUSTOM_STYLES_DESC                :Enable extra signal styles: shunt and banner repeater signals
+STR_PARAM_CUSTOM_STYLES_DESC                :Enable extra signal styles: shunt and banner repeater signals{}{}Requires an OpenTTD version which supports this feature such as JGR's patchpack v0.48.0 or later.
 
 STR_UNSUPPORTED_VERSION                     :Requires an OpenTTD version which supports this feature such as JGR's patchpack v0.43.0 or later.
 
