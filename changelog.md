@@ -1,3 +1,7 @@
+### v5  (2023-04-05)
+
+* Add parameter to set height of PBS signal graphics (normal, depending on vertical clearance, or short).
+
 ### v4  (2022-07-03)
 
 * Add parameter to enable custom signal styles: shunt, banner repeater and combined normal/shunt.
