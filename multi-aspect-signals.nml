@@ -111,6 +111,14 @@ if (param_block_style == 1 || param_pbs_height == 0) {
     }
 }
 
+if (param_block_style == 1 && param_pbs_height != 0) {
+    error(NOTICE, string(STR_UNSUPPORTED_PBS_HEIGHT_COMBINATION));
+} else {
+    if (param_pbs_height == 1 && !extended_feature_test("varaction2_signals_signal_vertical_clearance")) {
+        error(NOTICE, string(STR_UNSUPPORTED_VERTICAL_CLEARANCE));
+    }
+}
+
 template tmpl_signals(x,y) {
     [x +   0, y, 20, 30, -9, -28] // ne-sw
     [x +  60, y, 20, 30, -9, -28] // sw-ne

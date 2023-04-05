@@ -28,6 +28,9 @@ STR_PBS_HEIGHT_SHORT                        :Short
 
 STR_UNSUPPORTED_VERSION                     :Requires an OpenTTD version which supports this feature such as JGR's patchpack v0.43.0 or later.
 
+STR_UNSUPPORTED_PBS_HEIGHT_COMBINATION      :Short PBS signal graphics are not used when the block signal style is set to New.
+STR_UNSUPPORTED_VERTICAL_CLEARANCE          :This OpenTTD version does not support checking the vertical clearance above signals, this requires a version such as JGR's patchpack v0.52.2 or later.
+
 STR_STYLE_SHUNT                             :Shunt
 STR_STYLE_SHUNT_OPPOSITE                    :Shunt (opposite side)
 STR_STYLE_BANNER                            :Banner repeater
