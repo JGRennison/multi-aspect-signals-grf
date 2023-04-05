@@ -57,6 +57,21 @@ grf {
             def_value: 0;
         }
     }
+    param {
+        param_pbs_height {
+            type: int;
+            name: string(STR_PARAM_PBS_HEIGHT_NAME);
+            desc: string(STR_PARAM_PBS_HEIGHT_DESC);
+            min_value: 0;
+            max_value: 2;
+            def_value: 0;
+            names: {
+                0: string(STR_PBS_HEIGHT_NORMAL);
+                1: string(STR_PBS_HEIGHT_CLEARANCE);
+                2: string(STR_PBS_HEIGHT_SHORT);
+            };
+        }
+    }
 }
 
 if (!extended_feature_test("action3_signals_custom_signal_sprites")) {
@@ -79,6 +94,20 @@ replace(param[10]) {
     recolour_sprite {
         0xAB..0xAE: 0x94..0x97;
         //0x81..0x86: 0x92..0x97;
+    }
+}
+
+if (param_block_style == 1 || param_pbs_height == 0) {
+    param[11] = 0;
+} else {
+    if (param_pbs_height == 2) {
+        param[11] = 0x100;
+    } else {
+        if (extended_feature_test("varaction2_signals_signal_vertical_clearance")) {
+            param[11] = 14;
+        } else {
+            param[11] = 0;
+        }
     }
 }
 
@@ -139,6 +168,12 @@ spriteset (signals_new_block_green,  "gfx/light-generic.png") { tmpl_pbs_signals
 spriteset (signals_new_block_y,      "gfx/light-generic.png") { tmpl_pbs_signals(10, 302) }
 spriteset (signals_new_block_yy,     "gfx/light-generic.png") { tmpl_pbs_signals(26, 302) }
 
+spriteset (signals_pbs_oneway_red_short,   "gfx/light-generic.png") { tmpl_pbs_signals(10, 332) }
+spriteset (signals_pbs_oneway_green_short, "gfx/light-generic.png") { tmpl_pbs_signals(26, 332) }
+
+spriteset (signals_pbs_oneway_y_short,     "gfx/light-generic.png") { tmpl_pbs_signals(10, 363) }
+spriteset (signals_pbs_oneway_yy_short,    "gfx/light-generic.png") { tmpl_pbs_signals(26, 363) }
+
 spriteset (signals_shunt_red,   "gfx/shunt.png") { tmpl_signals(10, 50) }
 spriteset (signals_shunt_white, "gfx/shunt.png") { tmpl_signals(40, 50) }
 spriteset (signals_shunt_no_entry, "gfx/shunt.png") { tmpl_signals(10, 100) }
@@ -156,11 +191,23 @@ spriteset (signals_combined_y,     "gfx/light-combined.png") { tmpl_signals_comb
 spriteset (signals_combined_yy,    "gfx/light-combined.png") { tmpl_signals_combined(40, 100) }
 spriteset (signals_combined_shunt, "gfx/light-combined.png") { tmpl_signals_combined(10, 150) }
 
+spriteset (signals_combined_red_short,   "gfx/light-combined-short.png") { tmpl_signals_combined(10, 50) }
+spriteset (signals_combined_green_short, "gfx/light-combined-short.png") { tmpl_signals_combined(40, 50) }
+spriteset (signals_combined_y_short,     "gfx/light-combined-short.png") { tmpl_signals_combined(10, 100) }
+spriteset (signals_combined_yy_short,    "gfx/light-combined-short.png") { tmpl_signals_combined(40, 100) }
+spriteset (signals_combined_shunt_short, "gfx/light-combined-short.png") { tmpl_signals_combined(10, 150) }
+
 spriteset (signals_combined_oneway_red,   "gfx/light-combined.png") { tmpl_signals_combined(10, 200) }
 spriteset (signals_combined_oneway_green, "gfx/light-combined.png") { tmpl_signals_combined(40, 200) }
 spriteset (signals_combined_oneway_y,     "gfx/light-combined.png") { tmpl_signals_combined(10, 250) }
 spriteset (signals_combined_oneway_yy,    "gfx/light-combined.png") { tmpl_signals_combined(40, 250) }
 spriteset (signals_combined_oneway_shunt, "gfx/light-combined.png") { tmpl_signals_combined(10, 300) }
+
+spriteset (signals_combined_oneway_red_short,   "gfx/light-combined-short.png") { tmpl_signals_combined(10, 200) }
+spriteset (signals_combined_oneway_green_short, "gfx/light-combined-short.png") { tmpl_signals_combined(40, 200) }
+spriteset (signals_combined_oneway_y_short,     "gfx/light-combined-short.png") { tmpl_signals_combined(10, 250) }
+spriteset (signals_combined_oneway_yy_short,    "gfx/light-combined-short.png") { tmpl_signals_combined(40, 250) }
+spriteset (signals_combined_oneway_shunt_short, "gfx/light-combined-short.png") { tmpl_signals_combined(10, 300) }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_block_traditional, [
         STORE_TEMP(hasbit(extra_callback_info2, 24) ? param[10] : 0, 0x100),
@@ -187,7 +234,7 @@ switch (FEAT_SIGNALS, SELF, signal_switch_block, param_block_style) {
     1: signal_switch_block_new;
 }
 
-switch(FEAT_SIGNALS, SELF, signal_switch_pbs, [
+switch(FEAT_SIGNALS, SELF, signal_switch_pbs_std, [
         STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
         (extra_callback_info2 & 0x000000FF)
     ]) {
@@ -197,14 +244,24 @@ switch(FEAT_SIGNALS, SELF, signal_switch_pbs, [
     param_aspect_style == 2 ? 2 : 3: signals_pbs_yy;
 }
 
+switch(FEAT_SIGNALS, SELF, signal_switch_pbs, signal_vertical_clearance < param[11]) {
+    default: signal_switch_pbs_std;
+    1: signal_switch_block_new;
+}
+
 switch(FEAT_SIGNALS, SELF, signal_switch_pbs_oneway, [
         STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
-        (extra_callback_info2 & 0x000000FF)
+        (extra_callback_info2 & 0x000000FF) | (signal_vertical_clearance < param[11] ? 0x100 : 0)
     ]) {
     0: signals_pbs_oneway_red;
     1: signals_pbs_oneway_green;
     param_aspect_style == 2 ? 3 : 2: signals_pbs_oneway_y;
     param_aspect_style == 2 ? 2 : 3: signals_pbs_oneway_yy;
+
+    0x100: signals_pbs_oneway_red_short;
+    0x101: signals_pbs_oneway_green_short;
+    param_aspect_style == 2 ? 0x103 : 0x102: signals_pbs_oneway_y_short;
+    param_aspect_style == 2 ? 0x102 : 0x103: signals_pbs_oneway_yy_short;
 }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_shunt, [
@@ -251,24 +308,36 @@ switch(FEAT_SIGNALS, SELF, signal_switch_banner_pbs_oneway, [
 
 switch(FEAT_SIGNALS, SELF, signal_switch_combined_pbs, [
         STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
-        (extra_callback_info2 & 0x000000FF)
+        (extra_callback_info2 & 0x000000FF) | (signal_vertical_clearance < param[11] ? 0x100 : 0)
     ]) {
     0: signals_combined_red;
     1: signals_combined_green;
     param_aspect_style == 2 ? 3 : 2: signals_combined_y;
     param_aspect_style == 2 ? 2 : 3: signals_combined_yy;
     0xFF: signals_combined_shunt;
+
+    0x100: signals_combined_red_short;
+    0x101: signals_combined_green_short;
+    param_aspect_style == 2 ? 0x103 : 0x102: signals_combined_y_short;
+    param_aspect_style == 2 ? 0x102 : 0x103: signals_combined_yy_short;
+    0x1FF: signals_combined_shunt_short;
 }
 
 switch(FEAT_SIGNALS, SELF, signal_switch_combined_pbs_oneway, [
         STORE_TEMP(param[10] + (hasbit(extra_callback_info2, 24) ? 2 : 1), 0x100),
-        (extra_callback_info2 & 0x000000FF)
+        (extra_callback_info2 & 0x000000FF) | (signal_vertical_clearance < param[11] ? 0x100 : 0)
     ]) {
     0: signals_combined_oneway_red;
     1: signals_combined_oneway_green;
     param_aspect_style == 2 ? 3 : 2: signals_combined_oneway_y;
     param_aspect_style == 2 ? 2 : 3: signals_combined_oneway_yy;
     0xFF: signals_combined_oneway_shunt;
+
+    0x100: signals_combined_oneway_red_short;
+    0x101: signals_combined_oneway_green_short;
+    param_aspect_style == 2 ? 0x103 : 0x102: signals_combined_oneway_y_short;
+    param_aspect_style == 2 ? 0x102 : 0x103: signals_combined_oneway_yy_short;
+    0x1FF: signals_combined_oneway_shunt_short;
 }
 
 switch(FEAT_SIGNALS, SELF, switch_signals, (extra_callback_info2 & 0x00FFFF00) | signal_style) {
