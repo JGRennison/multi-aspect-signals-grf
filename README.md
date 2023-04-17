@@ -12,7 +12,7 @@
 * This GRF requires a non-standard version of OpenTTD which supports the signal graphics and multi-aspect features such as [JGR's patchpack](https://github.com/JGRennison/OpenTTD-patches) v0.43.0 or later.
 * Realistic braking must be enabled for multi-aspect signalling to be enabled.
 * Custom signal styles require a non-standard version of OpenTTD which supports this feature such as [JGR's patchpack](https://github.com/JGRennison/OpenTTD-patches) v0.48.0 or later.
-* Signal height depending on available vertical clearance requires a non-standard version of OpenTTD which supports this feature such as [JGR's patchpack](https://github.com/JGRennison/OpenTTD-patches) v0.52.2 or later.
+* Signal height depending on available vertical clearance requires a non-standard version of OpenTTD which supports this feature such as [JGR's patchpack](https://github.com/JGRennison/OpenTTD-patches) v0.53.0 or later.
 
 ### Things not included
 
@@ -22,8 +22,8 @@
 
 * Compiling requires a forked verison of NML with additional features from [here](https://github.com/JGRennison/nml).
 * For NewGRF development details of the signal graphics features used in this GRF see:
-    * [NML specification additions](https://htmlpreview.github.io/?https://github.com/JGRennison/OpenTTD-patches/blob/jgrpp/docs/newgrf-additions-nml.html).
-    * [NewGRF specification additions](https://htmlpreview.github.io/?https://github.com/JGRennison/OpenTTD-patches/blob/jgrpp/docs/newgrf-additions.html).
+    * [NML specification additions](https://jgrennison.github.io/OpenTTD-patches/newgrf-additions-nml.html).
+    * [NewGRF specification additions](https://jgrennison.github.io/OpenTTD-patches/newgrf-additions.html).
 
 ### License
 
