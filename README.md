@@ -18,6 +18,10 @@
 
 * This GRF does not include semaphores or any type of pre-signal.
 
+### More information
+
+* For more information on GRF parameters and the different signal types, see the [Wiki](https://github.com/JGRennison/multi-aspect-signals-grf/wiki).
+
 ### Development
 
 * Compiling requires a forked verison of NML with additional features from [here](https://github.com/JGRennison/nml).
