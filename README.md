@@ -1,5 +1,7 @@
 # Multi-Aspect Signals NewGRF
 
+![Sample image](https://raw.githubusercontent.com/wiki/JGRennison/multi-aspect-signals-grf/sample-image.png)
+
 ### Features
 
 * This GRF includes 4-aspect signal graphics (red, yellow, double-yellow, green) for the block signal, PBS and one-way PBS signal types.
