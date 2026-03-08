@@ -1,3 +1,8 @@
+### v6  (2026-03-08)
+
+* Change parameter defaults to enable custom signal styles and path signal height depending on vertical clearance by default.
+* Slightly adjust vertical clearance threshold for path signals.
+
 ### v5  (2023-04-05)
 
 * Add parameter to set height of path signal graphics (normal, depending on vertical clearance, or short).
