@@ -1,6 +1,6 @@
 ﻿##grflangid 0x01
 STR_GRF_NAME                                :Multi Aspect Signals
-STR_GRF_DESCRIPTION                         :{}Multi Aspect Signals{}{}This GRF includes 4-aspect signal graphics (red, yellow, double-yellow, green) for the block signal, PBS and one-way PBS signal types (light signals not semaphores).{}This GRF requires an OpenTTD version which supports this feature such as JGR's patchpack v0.43.0 or later.{}Realistic braking must be enabled for extra signal aspects to be used.{}{}License: GPL v2
+STR_GRF_DESCRIPTION                         :{}Multi Aspect Signals{}{}This GRF includes 4-aspect signal graphics (red, yellow, double-yellow, green) for the block signal, Path and one-way path signal types (light signals not semaphores).{}This GRF requires an OpenTTD version which supports this feature such as JGR's patchpack v0.43.0 or later.{}Realistic braking must be enabled for extra signal aspects to be used.{}{}License: GPL v2
 STR_GRF_URL                                 :https://github.com/JGRennison/multi-aspect-signals-grf
 
 STR_PARAM_BLOCK_STYLE_NAME                  :Block signal style
@@ -20,15 +20,15 @@ STR_ASPECT_STYLE_4_JAPANESE                 :4 Aspect Japanese (R -> YY -> Y -> 
 STR_PARAM_CUSTOM_STYLES_NAME                :Extra signal styles
 STR_PARAM_CUSTOM_STYLES_DESC                :Enable extra signal styles: shunt and banner repeater signals{}{}Requires an OpenTTD version which supports this feature such as JGR's patchpack v0.48.0 or later.
 
-STR_PARAM_PBS_HEIGHT_NAME                   :PBS signal height
-STR_PARAM_PBS_HEIGHT_DESC                   :Whether to use normal or short PBS signal graphics (short graphics requires that the block signal style parameter is set to Traditional)
+STR_PARAM_PBS_HEIGHT_NAME                   :Path signal height
+STR_PARAM_PBS_HEIGHT_DESC                   :Whether to use normal or short path signal graphics (short graphics requires that the block signal style parameter is set to Traditional)
 STR_PBS_HEIGHT_NORMAL                       :Normal
 STR_PBS_HEIGHT_CLEARANCE                    :Depending on available vertical clearance
 STR_PBS_HEIGHT_SHORT                        :Short
 
 STR_UNSUPPORTED_VERSION                     :Requires an OpenTTD version which supports this feature such as JGR's patchpack v0.43.0 or later.
 
-STR_UNSUPPORTED_PBS_HEIGHT_COMBINATION      :Short PBS signal graphics are not used when the block signal style is set to New.
+STR_UNSUPPORTED_PBS_HEIGHT_COMBINATION      :Short path signal graphics are not used when the block signal style is set to New.
 STR_UNSUPPORTED_VERTICAL_CLEARANCE          :This OpenTTD version does not support checking the vertical clearance above signals, this requires a version such as JGR's patchpack v0.52.2 or later.
 
 STR_STYLE_SHUNT                             :Shunt

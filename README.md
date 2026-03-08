@@ -4,10 +4,10 @@
 
 ### Features
 
-* This GRF includes 4-aspect signal graphics (red, yellow, double-yellow, green) for the block signal, PBS and one-way PBS signal types.
+* This GRF includes 4-aspect signal graphics (red, yellow, double-yellow, green) for the block signal, path and one-way path signal types.
 * Two different styles of block signal graphics are included. Use the GRF parameter to select which to use.
 * Custom signal styles: shunt, banner repeater and combined normal/shunt, this is enabled by a GRF parameter.
-* Two different heights of PBS signal graphics are included. Use the GRF parameter to select which to use, or whether it depends on the available vertical clearance. Short PBS signals requires that block signals are using traditional graphics.
+* Two different heights of path signal graphics are included. Use the GRF parameter to select which to use, or whether it depends on the available vertical clearance. Short path signals requires that block signals are using traditional graphics.
 
 ### Requirements
 

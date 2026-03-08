@@ -1,6 +1,6 @@
 ### v5  (2023-04-05)
 
-* Add parameter to set height of PBS signal graphics (normal, depending on vertical clearance, or short).
+* Add parameter to set height of path signal graphics (normal, depending on vertical clearance, or short).
 
 ### v4  (2022-07-03)
 
