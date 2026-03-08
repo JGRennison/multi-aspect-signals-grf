@@ -104,7 +104,7 @@ if (param_block_style == 1 || param_pbs_height == 0) {
         param[11] = 0x100;
     } else {
         if (extended_feature_test("varaction2_signals_signal_vertical_clearance")) {
-            param[11] = 14;
+            param[11] = 15;
         } else {
             param[11] = 0;
         }
